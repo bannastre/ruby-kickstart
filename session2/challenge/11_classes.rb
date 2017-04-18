@@ -12,9 +12,51 @@
 # Zero bottles of beer on the wall.
 #
 # Your program should not use ninety-nine output statements!
-# Design your program with a class named BeerSong whose initialize method 
+# Design your program with a class named BeerSong whose initialize method
 # receives a parameter indicating the number of bottles of beer initially on the wall.
 # If the parameter is less than zero, set the number of bottles to zero. Similarly,
 # if the parameter is greater than 99, set the number of beer bottles to 99
 # Then make a public method called print_song that outputs all stanzas from the number of bottles of beer down to zero.
 # Add any additional methods you find helpful.
+
+
+class BeerSong
+  attr_accessor :beers
+
+  def initialize (beers)
+    beers = 0 if beers < 0
+    beers = 99 if beers > 99
+    self.beers = beers
+  end
+
+  def print_song
+    beers.downto 1 do |i|
+      verse i
+    end
+  end
+
+  def verse (num)
+    if num.zero?
+      String.new
+    else
+      puts "#{number_string num} #{bottles num} of beer on the wall,"         ,
+           "#{number_string num} #{bottles num} of beer,"                     ,
+           "Take one down, pass it around,"                                   ,
+           "#{number_string num - 1} #{bottles num - 1} of beer on the wall."
+    end
+  end
+
+  def bottles (num)
+    if num == 1 then 'bottle' else 'bottles' end
+  end
+
+  def number_string (num)
+    if 0 <= num && num <= 19
+      %w(zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen)[num]
+    elsif num % 10 == 0
+      %w(zero ten twenty thirty forty fifty sixty seventy eighty ninety)[num/10]
+    else
+      "#{number_string num/10*10}-#{number_string num%10}".downcase
+    end.capitalize
+  end
+end
