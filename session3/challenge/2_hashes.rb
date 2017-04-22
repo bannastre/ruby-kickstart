@@ -8,3 +8,10 @@
 # staircase 4  # => {1 => [], 3 => [2]}
 # staircase 5  # => {1 => [], 3 => [2], 5 =>[2, 4]}
 
+def staircase(n)
+
+  hash = Hash.new
+  (1..n).each { |e| hash[e] = (1..e).to_a.select{|s| s%2 == 0}}
+  hash.select{|key, value| key%2 != 0}
+
+end
